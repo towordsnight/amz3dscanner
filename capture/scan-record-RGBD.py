@@ -175,7 +175,15 @@ if __name__ == "__main__":
     try:
         while True:
             # get frameset of color and depth
-            frames = pipeline.wait_for_frames()
+            # frames = pipeline.wait_for_frames()
+            try:
+                frames = pipeline.wait_for_frames()  # Wait for frames from the camera
+                if not frames:
+                    print("Error: No frames received.")
+                    continue  # Skip this loop iteration if no frames are received
+            except Exception as e:
+                print(f"Error: {e}")
+                break  # Exit if there is any error in capturing frames
 
             # align depth frames to color frames
             aligned_frames = align.process(frames)

@@ -42,7 +42,7 @@ def make_clean_folder(path_folder):
         else:
             exit()
 
-def guidelines(input_img):
+def guidelines(input_img, width, height):
     # center vertical line (green)
     cv2.line(input_img, (int(width/2), int(0)), (int(width/2), int(height)), (0, 255, 0), 1)
     # left vertical line (white)
@@ -60,13 +60,11 @@ def guidelines(input_img):
     # inner rectangle (green)
     cv2.rectangle(input_img, (int(width/4), int(height/(4/3))), (int(width/(4/3)), int(height/4)), (0, 255, 0), 1)
 
-# Function to display images using OpenCV in a separate thread
 def show_image(image):
     cv2.imshow('Recorder Realsense', image)
     cv2.waitKey(1)
 
-# Modify the capture loop to use threading for displaying OpenCV images
-def capture_images(pipeline, align, path_depth, path_color):
+def capture_images(pipeline, align, path_depth, path_color, width, height):
     frame_count = 0
     imwrite_state = False
     while True:
@@ -104,7 +102,6 @@ def capture_images(pipeline, align, path_depth, path_color):
             cv2.destroyAllWindows()
             break
 
-# Main part of the script
 if __name__ == "__main__":
     # Create directories for saving frames
     path_color = join("dataset", "color")
@@ -149,7 +146,7 @@ if __name__ == "__main__":
     align = rs.align(rs.stream.color)
 
     # Start the image capture and OpenCV display in separate thread
-    capture_thread = threading.Thread(target=capture_images, args=(pipeline, align, path_depth, path_color))
+    capture_thread = threading.Thread(target=capture_images, args=(pipeline, align, path_depth, path_color, width, height))
     capture_thread.start()
 
     # Wait for the thread to finish (or you can handle it based on your exit conditions)
