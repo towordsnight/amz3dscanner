@@ -18,7 +18,7 @@ class bcolors:
 def save_intrinsic_as_json(filename, frame):
     intrinsics = frame.profile.as_video_stream_profile().intrinsics 
     with open(filename, 'w') as outfile:
-        obj = json.dump(
+        json.dump(
             {
             'width': intrinsics.width,
             'height': intrinsics.height,
@@ -60,9 +60,10 @@ def guidelines(input_img, width, height):
     # inner rectangle (green)
     cv2.rectangle(input_img, (int(width/4), int(height/(4/3))), (int(width/(4/3)), int(height/4)), (0, 255, 0), 1)
 
+# Function to display images using OpenCV in a separate thread
 def show_image(image):
     cv2.imshow('Recorder Realsense', image)
-    cv2.waitKey(1)
+    cv2.waitKey(1)  # Keeps the window responsive
 
 def capture_images(pipeline, align, path_depth, path_color, width, height):
     frame_count = 0
