@@ -2,6 +2,7 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import os
+#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
 
 # Create directories to save depth and RGB frames
 depth_output_dir = "depth_frames"
