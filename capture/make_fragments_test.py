@@ -33,13 +33,13 @@ def read_rgbd_image(color_file, depth_file, convert_rgb_to_intensity, config):
         depth_trunc=config["max_depth"],
         convert_rgb_to_intensity=convert_rgb_to_intensity)
 
-
+# create an odometryOption for frame-to-frame alignment
 def register_one_rgbd_pair(s, t, color_files, depth_files, intrinsic,
                            with_opencv, config):
     src = read_rgbd_image(color_files[s], depth_files[s], True, config)
     tgt = read_rgbd_image(color_files[t], depth_files[t], True, config)
     option = o3d.pipelines.odometry.OdometryOption()
-    # option.max_depth_diff = config["max_depth_diff"]
+    option.depth_diff_max = config["max_depth_diff"]
 
     # Consecutive-frame odometry only
     odo_init = np.eye(4)
@@ -144,7 +144,9 @@ def run(config):
 
     color_files, depth_files = get_rgbd_file_lists(config["path_dataset"])
     n_files = len(color_files)
-    n_fragments = int(math.ceil(n_files / config['n_frames_per_fragment']))
+    # n_fragments = int(math.ceil(n_files / config['n_frames_per_fragment']))
+    n_fragments = int(math.ceil(n_files / 330))
+
 
     print(f"[INFO] Processing {n_fragments} fragments serially.")
     for fid in range(n_fragments):

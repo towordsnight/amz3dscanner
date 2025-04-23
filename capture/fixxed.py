@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # Recorded frame parameters
     frame_start = 30  # skip first 30 frames
-    frame_loop_at = 506
+    frame_loop_at = 360
     frame_per_rotation = frame_loop_at - frame_start
     rotation_period = frame_per_rotation / fps
     rpm = 60 / rotation_period
@@ -189,21 +189,27 @@ if __name__ == "__main__":
             if key == 32:
                 imwrite_state = not imwrite_state
 
-            # Check for pause between rotations or exit on ESC (key == 27)
-            if (frame_count > frame_start) and (frame_count != frame_max) and ((frame_count - frame_start) % frame_per_rotation == 0) and (frame_count > frame_per_rotation):
-                imwrite_state = False  # Pause recording between rotations
-                if key == 32:
-                    print(f"{bcolors.OK}^ rotation{bcolors.WARNING} {rotation_init} {bcolors.RESET}")
-                    imwrite_state = True
-                    rotation_init += 1
-                elif key == 27:
-                    cv2.destroyAllWindows()
-                    break
-            elif (frame_count == frame_max) or (key == 27):
+            if (frame_count == frame_max) or (key == 27):
                 print(f"{bcolors.OK}^ rotation{bcolors.WARNING} {rotation_init} {bcolors.RESET}")
                 print(f"{frame_count - frame_start} frames recorded")
                 cv2.destroyAllWindows()
                 break
+            # Check for pause between rotations or exit on ESC (key == 27)
+            # if (frame_count > frame_start) and (frame_count != frame_max) and ((frame_count - frame_start) % frame_per_rotation == 0) and (frame_count > frame_per_rotation):
+            #     imwrite_state = False  # Pause recording between rotations
+            #     if key == 32:
+            #         print(f"{bcolors.OK}^ rotation{bcolors.WARNING} {rotation_init} {bcolors.RESET}")
+            #         imwrite_state = True
+            #         rotation_init += 1
+            #     elif key == 27:
+            #         cv2.destroyAllWindows()
+            #         break
+            # elif (frame_count == frame_max) or (key == 27):
+            #     print(f"{bcolors.OK}^ rotation{bcolors.WARNING} {rotation_init} {bcolors.RESET}")
+            #     print(f"{frame_count - frame_start} frames recorded")
+            #     cv2.destroyAllWindows()
+            #     break
+            
     finally:
         pipeline.stop()
         if exists(path_color):
