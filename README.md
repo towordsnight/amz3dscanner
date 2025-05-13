@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "== Step 1: Generate convex hull as initial mesh (.off) =="
 PYTHONPATH=. python scripts/process_data/convex_hull.py \
   --i test/chip.ply \
   --faces 3000 \
-  --o test/init_chip.off
+  --o test/init_chip.off \
+  --manifold-path ./Manifold/build/manifold
 
 echo "== Step 2: Convert .off to .obj using trimesh =="
 python -c "import trimesh; m=trimesh.load('test/init_chip.off'); m.export('test/init_chip.obj')"
