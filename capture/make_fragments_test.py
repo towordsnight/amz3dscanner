@@ -145,7 +145,7 @@ def run(config):
     color_files, depth_files = get_rgbd_file_lists(config["path_dataset"])
     n_files = len(color_files)
     # n_fragments = int(math.ceil(n_files / config['n_frames_per_fragment']))
-    n_fragments = int(math.ceil(n_files / 330))
+    n_fragments = int(math.ceil(n_files / 360))
 
 
     print(f"[INFO] Processing {n_fragments} fragments serially.")

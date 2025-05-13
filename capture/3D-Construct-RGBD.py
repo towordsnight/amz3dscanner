@@ -7,7 +7,7 @@ import os.path
 import open3d as o3d
 sys.path.append(".")
 sys.path.append("files")
-import make_fragments,make_fragments_test, register_fragments, refine_registration, integrate_scene, file, slac, slac_integrate
+import make_fragments,make_fragments_test, register_fragments, refine_registration, integrate_scene, file, slac, slac_integrate, register_fragments_original
 from initialize_config import initialize_config
 
 class bcolors:
@@ -40,7 +40,8 @@ if __name__ == '__main__':
     # start_time = time.time(); make_fragments.run(config); times[0] = time.time() - start_time
     start_time = time.time(); make_fragments_test.run(config); times[0] = time.time() - start_time
     print(f"{bcolors.OK}====================================\nREGISTER FRAGMENTS\n===================================={bcolors.RESET}")
-    start_time = time.time(); register_fragments.run(config); times[1] = time.time() - start_time
+    # start_time = time.time(); register_fragments.run(config); times[1] = time.time() - start_time
+    start_time = time.time(); register_fragments_original.run(config); times[1] = time.time() - start_time
     print(f"{bcolors.OK}====================================\nREFINE REGISTRATION\n===================================={bcolors.RESET}")
     start_time = time.time(); refine_registration.run(config); times[2] = time.time() - start_time
     print(f"{bcolors.OK}====================================\nINTEGRATE SCENE\n===================================={bcolors.RESET}")
